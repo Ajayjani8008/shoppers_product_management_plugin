@@ -100,8 +100,5 @@ function cpm_display_product_form()
 
 
 
-
-
-
 <?php
 }

@@ -1,6 +1,7 @@
-#cpm-save-product{
+#cpm-save-product {
     margin: 10px 0px;
 }
+
 .cpm-add-new {
     display: inline-block;
     margin: 10px 0px;
@@ -16,9 +17,11 @@
 #cpm-product-list tr {
     text-align: center;
 }
+
 #cpm-product-list td {
     vertical-align: middle;
 }
+
 .cpm-edit-product {
     background-color: #0073aa;
     padding: 10px 20px;
@@ -38,6 +41,7 @@
     font-size: 14px;
     transition: background-color 0.3s ease;
 }
+
 .cpm-delete-product {
     background-color: #db0000;
     padding: 10px 20px;
@@ -52,14 +56,17 @@
     background-color: #005177;
     color: white;
 }
+
 .cpm-delete-product:hover {
     background-color: #8d0000;
     color: white;
 }
+
 .cpm-edit-product:hover {
     background-color: #003077;
     color: white;
 }
+
 .cpm-view-product:hover {
     background-color: #525252;
     color: rgb(255, 255, 255);
@@ -114,4 +121,53 @@
 .product-list-link:hover {
     background-color: #222222;
     color: white;
+}
+
+
+
+
+
+
+
+
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.ajax-pagination .page-number {
+    display: inline-block;
+    margin: 0 3px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #333;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.ajax-pagination .page-number:hover {
+    background-color: #0073aa;
+    color: #fff;
+}
+
+.ajax-pagination .page-number.active {
+    background-color: #0073aa;
+    color: #fff;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+
+.ajax-pagination .page-number.first,
+.ajax-pagination .page-number.last {
+    font-weight: bold;
+}
+
+.ajax-pagination .page-number.disabled {
+    color: #999;
+    background-color: #f1f1f1;
+    pointer-events: none;
 }

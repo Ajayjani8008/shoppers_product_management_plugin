@@ -16,30 +16,30 @@ function cpm_ajax_save_product()
         'post_type'    => 'product',
     ];
 
-    
+
     if ($product_id) {
         $product_data['ID'] = $product_id;
     }
 
-    
+
     $product_id = wp_insert_post($product_data);
 
     if (!is_wp_error($product_id)) {
         $product = wc_get_product($product_id);
 
-        
+
         $product->set_regular_price(floatval($_POST['product_regular_price']));
         $product->set_sale_price(floatval($_POST['product_sale_price']));
 
-        
+
         if (!empty($_POST['product_category'])) {
             wp_set_object_terms($product_id, intval($_POST['product_category']), 'product_cat');
         }
 
-        
+
         $product->set_stock_status(sanitize_text_field($_POST['stock_status']));
 
-        
+
         if (!empty($_FILES['product_image']['name'])) {
             require_once(ABSPATH . 'wp-admin/includes/file.php');
             require_once(ABSPATH . 'wp-admin/includes/media.php');
@@ -52,10 +52,10 @@ function cpm_ajax_save_product()
             }
         }
 
-        
+
         $product->save();
 
-        
+
         ob_start();
         cpm_display_product_list();
         $product_list_html = ob_get_clean();
@@ -139,12 +139,15 @@ function cpm_ajax_refresh_product_list()
 add_action('wp_ajax_cpm_refresh_product_list', 'cpm_ajax_refresh_product_list');
 
 
+
+
+
 function handle_ajax_pagination()
 {
     check_ajax_referer('cpm_product_nonce', 'nonce');
 
     $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
-    $posts_per_page = 6;
+    $posts_per_page = 3;
 
     $args = array(
         'post_type' => 'product',
@@ -153,14 +156,21 @@ function handle_ajax_pagination()
         'post_status' => array('publish', 'draft', 'pending', 'future', 'private'),
     );
 
+
+
+
     $products = new WP_Query($args);
 
+
     ob_start();
+
+
 
     if ($products->have_posts()) {
         while ($products->have_posts()) {
             $products->the_post();
             $product = wc_get_product(get_the_ID());
+
             $tags = get_the_terms(get_the_ID(), 'product_tag');
             $tag_list = $tags && !is_wp_error($tags) ? implode(', ', wp_list_pluck($tags, 'name')) : 'No Tags';
 ?>
@@ -180,9 +190,19 @@ function handle_ajax_pagination()
 <?php
         }
     } else {
-        echo '<tr><td colspan="6">No products found.</td></tr>';
+        echo '<tr><td colspan="7">No products found.</td></tr>';
     }
 
+    $total_pages = $products->max_num_pages;
+
+    if ($total_pages > 1) {
+        echo '<div class="ajax-pagination">';
+        for ($i = 1; $i <= $total_pages; $i++) {
+            $active_class = ($i == $paged) ? 'active' : '';
+            echo '<a href="#" class="page-number ' . $active_class . '" data-page="' . $i . '">' . $i . '</a>';
+        }
+        echo '</div>';
+    }
     wp_reset_postdata();
     echo ob_get_clean();
     wp_die();
