@@ -99,5 +99,9 @@ function cpm_display_product_form()
     <div id="cpm-message"></div>
 
 
+
+
+
+
 <?php
 }
