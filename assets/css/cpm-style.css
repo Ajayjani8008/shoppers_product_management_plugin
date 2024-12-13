@@ -1,0 +1,117 @@
+#cpm-save-product{
+    margin: 10px 0px;
+}
+.cpm-add-new {
+    display: inline-block;
+    margin: 10px 0px;
+    padding: 10px 20px;
+    background-color: #0073aa;
+    color: #fff;
+    text-decoration: none !important;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+#cpm-product-list tr {
+    text-align: center;
+}
+#cpm-product-list td {
+    vertical-align: middle;
+}
+.cpm-edit-product {
+    background-color: #0073aa;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none !important;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.cpm-view-product {
+    background-color: #999999;
+    padding: 10px 20px;
+    color: #ffffff;
+    text-decoration: none !important;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+.cpm-delete-product {
+    background-color: #db0000;
+    padding: 10px 20px;
+    color: #ffffff;
+    text-decoration: none !important;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.cpm-add-new:hover {
+    background-color: #005177;
+    color: white;
+}
+.cpm-delete-product:hover {
+    background-color: #8d0000;
+    color: white;
+}
+.cpm-edit-product:hover {
+    background-color: #003077;
+    color: white;
+}
+.cpm-view-product:hover {
+    background-color: #525252;
+    color: rgb(255, 255, 255);
+}
+
+#image-preview {
+    margin: 10px 0;
+    text-align: center;
+}
+
+#image-preview img {
+    max-width: 150px;
+    max-height: 150px;
+    border: 1px solid #ddd;
+    padding: 5px;
+    background: #f9f9f9;
+}
+
+#cpm-message {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    display: none;
+}
+
+#cpm-message.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+#cpm-message.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+
+
+.product-list-link {
+    margin-top: 30px !important;
+    background-color: #4f5050;
+    padding: 10px 20px;
+    color: #ffffff;
+    text-decoration: none !important;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+.product-list-link:hover {
+    background-color: #222222;
+    color: white;
+}
