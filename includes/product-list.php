@@ -9,7 +9,7 @@ function cpm_display_product_list()
     }
 
     $paged = (get_query_var('paged')) ? get_query_var('paged') : 1;
-    $posts_per_page = 3;
+    $posts_per_page = 10;
 
 
     $args = array(

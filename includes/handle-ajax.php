@@ -145,7 +145,7 @@ function handle_ajax_pagination()
 {
     check_ajax_referer('cpm_product_nonce', 'nonce');
     $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
-    $posts_per_page = 3;
+    $posts_per_page = 10;
 
     $args = array(
         'post_type' => 'product',
