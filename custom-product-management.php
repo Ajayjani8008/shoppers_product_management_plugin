@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: Custom Product Management
-Description: A plugin to manage WooCommerce products from the front end.
+Description: Use [product_management] shortcode to use this plugin to manage WooCommerce products from the front end.
 Version: 1.0
 Author: I-genesys Technology 
 Author URI: https://www.i-genesys.com/
