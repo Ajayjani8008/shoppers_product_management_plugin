@@ -130,32 +130,38 @@ jQuery(document).ready(function ($) {
     });
 
 
-
     jQuery(document).on('click', '.ajax-pagination a', function (e) {
         e.preventDefault();
 
-        var page = jQuery(this).data('page');
-        var nonce = cpm_ajax.nonce;
+        const page = jQuery(this).data('page'); // Get the page number
+        const nonce = cpm_ajax.nonce;
 
         jQuery.ajax({
-            url: cpm_ajax.ajax_url,
+            url: cpm_ajax.ajax_url, // AJAX URL
             type: 'POST',
             data: {
                 action: 'handle_ajax_pagination',
                 paged: page,
-                nonce: nonce,
+                nonce: nonce
             },
             beforeSend: function () {
                 jQuery('#cpm-product-list-table tbody').html('<tr><td colspan="7">Loading...</td></tr>');
             },
             success: function (response) {
-                jQuery('#cpm-product-list-table tbody').html(response);
-
+                if (response.success) {
+                    // Replace table content
+                    jQuery('#cpm-product-list-table tbody').html(response.data.content);
+                    // Update pagination
+                    jQuery('.pagination .ajax-pagination').html(response.data.pagination);
+                } else {
+                    alert('Failed to load content.');
+                }
             },
             error: function () {
                 jQuery('#cpm-product-list-table tbody').html('<tr><td colspan="7">Error loading products.</td></tr>');
             }
         });
     });
+
 
 });

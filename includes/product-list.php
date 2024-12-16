@@ -68,62 +68,47 @@ function cpm_display_product_list()
                     ?>
                 </tbody>
             </table>
-
-            <!-- <div class="pagination">
-                <div class="ajax-pagination">
-                    <?php
-                    // $total_pages = $products->max_num_pages;
-                    // for ($i = 1; $i <= $total_pages; $i++) {
-                    //     echo '<a href="#" data-page="' . $i . '" class="page-number">' . $i . '</a> ';
-                    // }
-                    ?>
-                </div>
-            </div> -->
-
-            <div class="pagination">
-                <div class="ajax-pagination">
-                    <?php
-                    $total_pages = $products->max_num_pages;
-                    $visible_pages = 4;
-                    $current_page = isset($_GET['paged']) ? intval($_GET['paged']) : 1;
-
-                    if ($current_page > 1) {
-                        echo '<a href="#" data-page="1" class="page-number first">First</a>';
-                        echo '<a href="#" data-page="' . ($current_page - 1) . '" class="page-number prev">Previous</a>';
-                    }
-
-                    // Calculate start and end page numbers for the range
-                    $start_page = max(1, $current_page - floor($visible_pages / 2));
-                    $end_page = min($total_pages, $start_page + $visible_pages - 1);
-
-                    // Adjust start page if at the end of the range
-                    if ($end_page - $start_page < $visible_pages - 1) {
-                        $start_page = max(1, $end_page - $visible_pages + 1);
-                    }
-
-                    // Generate page numbers
-                    for ($i = $start_page; $i <= $end_page; $i++) {
-                        $active_class = ($i == $current_page) ? 'active' : '';
-                        echo '<a href="#" data-page="' . $i . '" class="page-number ' . $active_class . '">' . $i . '</a>';
-                    }
-
-                    // Show "Next" and "Last" links
-                    if ($current_page < $total_pages) {
-                        echo '<a href="#" data-page="' . ($current_page + 1) . '" class="page-number next">Next</a>';
-                        echo '<a href="#" data-page="' . $total_pages . '" class="page-number last">Last</a>';
-                    }
-                    ?>
-                </div>
-            </div>
-
-
-
-
         </div>
-<?php
+
+    <?php
     } else {
         echo "<p>No products found.</p>";
     }
+
+    ?>
+
+    <div class="pagination">
+        <div class="ajax-pagination">
+            <?php
+            $total_pages = $products->max_num_pages ?? 1;
+            $paged = 1;
+            $range = 2;
+            $start = max(1, $paged - $range);
+            $end = min($total_pages, $paged + $range);
+
+            if ($paged > 1) {
+                echo '<a href="#" data-page="1" class="page-number first">First</a>';
+                echo '<a href="#" data-page="' . ($paged - 1) . '" class="page-number prev">Previous</a>';
+            }
+
+            for ($i = $start; $i <= $end; $i++) {
+                $active_class = ($i == $paged) ? 'active' : '';
+                echo '<a href="#" class="page-number ' . $active_class . '" data-page="' . $i . '">' . $i . '</a>';
+            }
+
+            if ($end < $total_pages - 1) {
+                echo '<span class="ellipsis">...</span>';
+            }
+
+            if ($paged < $total_pages) {
+                echo '<a href="#" data-page="' . ($paged + 1) . '" class="page-number next">Next</a>';
+                echo '<a href="#" data-page="' . $total_pages . '" class="page-number last">Last</a>';
+            }
+            ?>
+        </div>
+    </div>
+
+<?php
 
     wp_reset_postdata();
 }

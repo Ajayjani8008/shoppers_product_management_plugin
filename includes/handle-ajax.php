@@ -141,11 +141,9 @@ add_action('wp_ajax_cpm_refresh_product_list', 'cpm_ajax_refresh_product_list');
 
 
 
-
 function handle_ajax_pagination()
 {
     check_ajax_referer('cpm_product_nonce', 'nonce');
-
     $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
     $posts_per_page = 3;
 
@@ -156,15 +154,9 @@ function handle_ajax_pagination()
         'post_status' => array('publish', 'draft', 'pending', 'future', 'private'),
     );
 
-
-
-
     $products = new WP_Query($args);
 
-
     ob_start();
-
-
 
     if ($products->have_posts()) {
         while ($products->have_posts()) {
@@ -189,22 +181,44 @@ function handle_ajax_pagination()
             </tr>
 <?php
         }
-    } else {
-        echo '<tr><td colspan="7">No products found.</td></tr>';
     }
 
-    $total_pages = $products->max_num_pages;
-
-    if ($total_pages > 1) {
-        echo '<div class="ajax-pagination">';
-        for ($i = 1; $i <= $total_pages; $i++) {
-            $active_class = ($i == $paged) ? 'active' : '';
-            echo '<a href="#" class="page-number ' . $active_class . '" data-page="' . $i . '">' . $i . '</a>';
-        }
-        echo '</div>';
-    }
     wp_reset_postdata();
-    echo ob_get_clean();
+
+    $output = ob_get_clean();
+
+    ob_start();
+    $total_pages = $products->max_num_pages;
+    $range = 2;
+    $start = max(1, $paged - $range);
+    $end = min($total_pages, $paged + $range);
+
+    if ($paged > 1) {
+        echo '<a href="#" data-page="1" class="page-number first">First</a>';
+        echo '<a href="#" data-page="' . ($paged - 1) . '" class="page-number prev">Previous</a>';
+    }
+
+    for ($i = $start; $i <= $end; $i++) {
+        $active_class = ($i == $paged) ? 'active' : '';
+        echo '<a href="#" class="page-number ' . $active_class . '" data-page="' . $i . '">' . $i . '</a>';
+    }
+
+    if ($end < $total_pages - 1) {
+        echo '<span class="ellipsis">...</span>';
+    }
+
+    if ($paged < $total_pages) {
+        echo '<a href="#" data-page="' . ($paged + 1) . '" class="page-number next">Next</a>';
+        echo '<a href="#" data-page="' . $total_pages . '" class="page-number last">Last</a>';
+    }
+
+    $pagination_html = ob_get_clean();
+
+    wp_send_json_success([
+        'content' => $output,
+        'pagination' => $pagination_html,
+    ]);
+
     wp_die();
 }
 

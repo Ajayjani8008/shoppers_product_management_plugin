@@ -128,8 +128,6 @@
 
 
 
-
-
 .pagination {
     text-align: center;
     margin: 20px 0;
@@ -159,7 +157,6 @@
     font-weight: bold;
     pointer-events: none;
 }
-
 
 .ajax-pagination .page-number.first,
 .ajax-pagination .page-number.last {
