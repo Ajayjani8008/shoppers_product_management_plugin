@@ -133,11 +133,11 @@ jQuery(document).ready(function ($) {
     jQuery(document).on('click', '.ajax-pagination a', function (e) {
         e.preventDefault();
 
-        const page = jQuery(this).data('page'); // Get the page number
+        const page = jQuery(this).data('page');
         const nonce = cpm_ajax.nonce;
 
         jQuery.ajax({
-            url: cpm_ajax.ajax_url, // AJAX URL
+            url: cpm_ajax.ajax_url,
             type: 'POST',
             data: {
                 action: 'handle_ajax_pagination',
@@ -149,9 +149,9 @@ jQuery(document).ready(function ($) {
             },
             success: function (response) {
                 if (response.success) {
-                    // Replace table content
+                  
                     jQuery('#cpm-product-list-table tbody').html(response.data.content);
-                    // Update pagination
+                
                     jQuery('.pagination .ajax-pagination').html(response.data.pagination);
                 } else {
                     alert('Failed to load content.');
