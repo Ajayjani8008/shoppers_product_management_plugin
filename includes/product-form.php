@@ -73,7 +73,7 @@ function cpm_display_product_form()
         </select>
 
         <label for="product_image">Product Image</label>
-        <input type="file" id="product_image" name="product_image">
+        <input type="file" id="product_image" name="product_image" icon="upload">
 
         <div id="image-preview">
             <?php
@@ -98,6 +98,23 @@ function cpm_display_product_form()
     </form>
     <div id="cpm-message"></div>
 
+    <?php
+    $categories = get_terms([
+        'taxonomy' => 'product_cat',
+        'orderby'  => 'name',
+        'hide_empty' => false,
+    ]);
+
+    if ($categories && !is_wp_error($categories)) {
+        echo '<div"><select class="right-element" id="category-filter" name="category_filter">';
+        echo '<option value="">Select Category</option>';
+        foreach ($categories as $category) {
+            echo '<option value="' . esc_attr($category->term_id) . '">' . esc_html($category->name) . '</option>';
+        }
+        echo '</select></div>';
+    }
+
+    ?>
 
 
 <?php

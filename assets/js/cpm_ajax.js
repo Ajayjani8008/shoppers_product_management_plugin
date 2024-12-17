@@ -130,6 +130,43 @@ jQuery(document).ready(function ($) {
     });
 
 
+    $('#category-filter').on('change', function () {
+        const categoryId = $(this).val();
+        const nonce = cpm_ajax.nonce;
+        const page = 1; 
+
+        $.ajax({
+            url: cpm_ajax.ajax_url,
+            type: 'POST',
+            data: {
+                action: 'handle_ajax_pagination',
+                paged: page,
+                category_id: categoryId,
+                nonce: nonce
+            },
+            beforeSend: function () {
+                $('#cpm-product-list-table tbody').html('<tr><td colspan="7">Loading...</td></tr>');
+            },
+            success: function (response) {
+                if (response.success) {
+                    if (response.data.content.trim() === "") {
+                        $('#cpm-product-list-table tbody').html('<tr><td colspan="7">No Product Found</td></tr>');
+                    } else {
+                        $('#cpm-product-list-table tbody').html(response.data.content);
+                        $('.pagination').html(response.data.pagination);
+                    }
+
+                } else {
+                    alert('Failed to load products.');
+                }
+            },
+            error: function () {
+                $('#cpm-product-list-table tbody').html('<tr><td colspan="7">Error loading products.</td></tr>');
+            }
+        });
+    });
+
+
     jQuery(document).on('click', '.ajax-pagination a', function (e) {
         e.preventDefault();
 
@@ -149,10 +186,10 @@ jQuery(document).ready(function ($) {
             },
             success: function (response) {
                 if (response.success) {
-                  
+
                     jQuery('#cpm-product-list-table tbody').html(response.data.content);
-                
-                    jQuery('.pagination .ajax-pagination').html(response.data.pagination);
+
+                    jQuery('.pagination').html(response.data.pagination);
                 } else {
                     alert('Failed to load content.');
                 }

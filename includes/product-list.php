@@ -24,7 +24,8 @@ function cpm_display_product_list()
 
     if ($products->have_posts()) {
 ?>
-        <div id="cpm-message"></div>
+
+
         <div id="cpm-product-list">
             <table id="cpm-product-list-table">
                 <thead>
@@ -68,6 +69,36 @@ function cpm_display_product_list()
                     ?>
                 </tbody>
             </table>
+            <div class="pagination">
+                <div class="ajax-pagination">
+                    <?php
+                    $total_pages = $products->max_num_pages ?? 1;
+                    $paged = 1;
+                    $range = 2;
+                    $start = max(1, $paged - $range);
+                    $end = min($total_pages, $paged + $range);
+
+                    if ($paged > 1) {
+                        echo '<a href="#" data-page="1" class="page-number first">First</a>';
+                        echo '<a href="#" data-page="' . ($paged - 1) . '" class="page-number prev">Previous</a>';
+                    }
+
+                    for ($i = $start; $i <= $end; $i++) {
+                        $active_class = ($i == $paged) ? 'active' : '';
+                        echo '<a href="#" class="page-number ' . $active_class . '" data-page="' . $i . '">' . $i . '</a>';
+                    }
+
+                    if ($end < $total_pages - 1) {
+                        echo '<span class="ellipsis">...</span>';
+                    }
+
+                    if ($paged < $total_pages) {
+                        echo '<a href="#" data-page="' . ($paged + 1) . '" class="page-number next">Next</a>';
+                        echo '<a href="#" data-page="' . $total_pages . '" class="page-number last">Last</a>';
+                    }
+                    ?>
+                </div>
+            </div>
         </div>
 
     <?php
@@ -77,36 +108,7 @@ function cpm_display_product_list()
 
     ?>
 
-    <div class="pagination">
-        <div class="ajax-pagination">
-            <?php
-            $total_pages = $products->max_num_pages ?? 1;
-            $paged = 1;
-            $range = 2;
-            $start = max(1, $paged - $range);
-            $end = min($total_pages, $paged + $range);
 
-            if ($paged > 1) {
-                echo '<a href="#" data-page="1" class="page-number first">First</a>';
-                echo '<a href="#" data-page="' . ($paged - 1) . '" class="page-number prev">Previous</a>';
-            }
-
-            for ($i = $start; $i <= $end; $i++) {
-                $active_class = ($i == $paged) ? 'active' : '';
-                echo '<a href="#" class="page-number ' . $active_class . '" data-page="' . $i . '">' . $i . '</a>';
-            }
-
-            if ($end < $total_pages - 1) {
-                echo '<span class="ellipsis">...</span>';
-            }
-
-            if ($paged < $total_pages) {
-                echo '<a href="#" data-page="' . ($paged + 1) . '" class="page-number next">Next</a>';
-                echo '<a href="#" data-page="' . $total_pages . '" class="page-number last">Last</a>';
-            }
-            ?>
-        </div>
-    </div>
 
 <?php
 

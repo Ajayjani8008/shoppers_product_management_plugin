@@ -124,6 +124,11 @@
 }
 
 
+.right-element{
+    display:inline-flexbox;
+    margin: 10px 0px;
+    align-content: end;
+}
 
 
 

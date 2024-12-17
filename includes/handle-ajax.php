@@ -145,6 +145,7 @@ function handle_ajax_pagination()
 {
     check_ajax_referer('cpm_product_nonce', 'nonce');
     $paged = isset($_POST['paged']) ? intval($_POST['paged']) : 1;
+    $category_id = isset($_POST['category_id']) ? intval($_POST['category_id']) : '';
     $posts_per_page = 10;
 
     $args = array(
@@ -153,6 +154,16 @@ function handle_ajax_pagination()
         'paged' => $paged,
         'post_status' => array('publish', 'draft', 'pending', 'future', 'private'),
     );
+    if ($category_id) {
+        $args['tax_query'] = array(
+            array(
+                'taxonomy' => 'product_cat',
+                'field'    => 'id',
+                'terms'    => $category_id,
+                'operator' => 'IN',
+            ),
+        );
+    }
 
     $products = new WP_Query($args);
 
@@ -187,12 +198,16 @@ function handle_ajax_pagination()
 
     $output = ob_get_clean();
 
+
     ob_start();
+
+    echo '<div class="ajax-pagination">';
     $total_pages = $products->max_num_pages;
     $range = 2;
     $start = max(1, $paged - $range);
     $end = min($total_pages, $paged + $range);
 
+  
     if ($paged > 1) {
         echo '<a href="#" data-page="1" class="page-number first">First</a>';
         echo '<a href="#" data-page="' . ($paged - 1) . '" class="page-number prev">Previous</a>';
@@ -211,6 +226,7 @@ function handle_ajax_pagination()
         echo '<a href="#" data-page="' . ($paged + 1) . '" class="page-number next">Next</a>';
         echo '<a href="#" data-page="' . $total_pages . '" class="page-number last">Last</a>';
     }
+    echo "</div>";
 
     $pagination_html = ob_get_clean();
 
@@ -218,6 +234,7 @@ function handle_ajax_pagination()
         'content' => $output,
         'pagination' => $pagination_html,
     ]);
+
 
     wp_die();
 }

@@ -49,6 +49,7 @@ $required_files = [
     CPM_PLUGIN_PATH . 'includes/handle-ajax.php',
     CPM_PLUGIN_PATH . 'includes/product-form.php',
     CPM_PLUGIN_PATH . 'includes/product-list.php',
+
 ];
 
 foreach ($required_files as $file) {
