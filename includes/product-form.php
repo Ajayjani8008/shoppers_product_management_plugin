@@ -106,7 +106,7 @@ function cpm_display_product_form()
     ]);
 
     if ($categories && !is_wp_error($categories)) {
-        echo '<div"><select class="right-element" id="category-filter" name="category_filter">';
+        echo '<div class="right-element"><select id="category-filter" name="category_filter">';
         echo '<option value="">Select Category</option>';
         foreach ($categories as $category) {
             echo '<option value="' . esc_attr($category->term_id) . '">' . esc_html($category->name) . '</option>';

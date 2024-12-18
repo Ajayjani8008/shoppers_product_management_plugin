@@ -41,8 +41,17 @@ function cpm_enqueue_scripts()
         ),
     );
     wp_enqueue_script('cpm-script', CPM_PLUGIN_URL . 'assets/js/cpm-script.js', array('jquery'), null, true);
+
+
+    wp_enqueue_style('datatables-css', 'https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css');
+
+    wp_enqueue_script('jquery');
+
+    wp_enqueue_script('datatables-js', 'https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js', array('jquery'), null, true);
 }
 add_action('wp_enqueue_scripts', 'cpm_enqueue_scripts');
+
+
 
 
 $required_files = [

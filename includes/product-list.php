@@ -27,48 +27,50 @@ function cpm_display_product_list()
 
 
         <div id="cpm-product-list">
-            <table id="cpm-product-list-table">
-                <thead>
-                    <tr>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>RegularPrice</th>
-                        <th>Sale Price</th>
-                        <th>Tags</th>
-                        <th>Stock Status</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    while ($products->have_posts()) {
-                        $products->the_post();
-                        $product = wc_get_product(get_the_ID());
-
-                        $tags = get_the_terms(get_the_ID(), 'product_tag');
-                        $tag_list = $tags && !is_wp_error($tags) ? implode(', ', wp_list_pluck($tags, 'name')) : 'No Tags';
-                    ?>
-                        <tr id="product-row-<?php echo $product->get_id(); ?>">
-                            <td class="product-image"><?php echo $product->get_image('small_product_thumbnail'); ?></td>
-                            <td class="product-name"><?php echo esc_html($product->get_name()); ?></td>
-
-                            <td class="product-regular-price"><?php echo wc_price($product->get_regular_price()); ?></td>
-
-                            <td class="product-sale-price"><?php echo wc_price($product->get_sale_price()); ?></td>
-
-                            <td class="product-tags"><?php echo esc_html($tag_list); ?></td>
-                            <td class="product-stock"><?php echo ucfirst(esc_html($product->get_stock_status())); ?></td>
-                            <td class="product-actions">
-                                <a href="#" class="cpm-edit-product" data-product-id="<?php echo $product->get_id(); ?>">Edit</a>
-                                <a href="<?php echo esc_url(get_permalink($product->get_id())); ?>" class="cpm-view-product" target="_blank">View</a>
-                                <a href="#" class="cpm-delete-product" data-product-id="<?php echo $product->get_id(); ?>">Delete</a>
-                            </td>
+            <div class="table-container">
+                <table id="cpm-product-list-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>RegularPrice</th>
+                            <th>Sale Price</th>
+                            <th>Tags</th>
+                            <th>Stock Status</th>
+                            <th>Actions</th>
                         </tr>
-                    <?php
-                    }
-                    ?>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <?php
+                        while ($products->have_posts()) {
+                            $products->the_post();
+                            $product = wc_get_product(get_the_ID());
+
+                            $tags = get_the_terms(get_the_ID(), 'product_tag');
+                            $tag_list = $tags && !is_wp_error($tags) ? implode(', ', wp_list_pluck($tags, 'name')) : 'No Tags';
+                        ?>
+                            <tr id="product-row-<?php echo $product->get_id(); ?>">
+                                <td class="product-image"><?php echo $product->get_image('small_product_thumbnail'); ?></td>
+                                <td class="product-name"><?php echo esc_html($product->get_name()); ?></td>
+
+                                <td class="product-regular-price"><?php echo wc_price($product->get_regular_price()); ?></td>
+
+                                <td class="product-sale-price"><?php echo wc_price($product->get_sale_price()); ?></td>
+
+                                <td class="product-tags"><?php echo esc_html($tag_list); ?></td>
+                                <td class="product-stock"><?php echo ucfirst(esc_html($product->get_stock_status())); ?></td>
+                                <td class="product-actions">
+                                    <a href="#" class="cpm-edit-product" data-product-id="<?php echo $product->get_id(); ?>">Edit</a>
+                                    <a href="<?php echo esc_url(get_permalink($product->get_id())); ?>" class="cpm-view-product" target="_blank">View</a>
+                                    <a href="#" class="cpm-delete-product" data-product-id="<?php echo $product->get_id(); ?>">Delete</a>
+                                </td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
             <div class="pagination">
                 <div class="ajax-pagination">
                     <?php
